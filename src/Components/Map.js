@@ -34,14 +34,18 @@ const deepCompareEqualsForMaps = createCustomEqual((deepEqual) => (a, b) => {
   return deepEqual(a, b);
 });
 
-const Map = ({ onClick, onIdle, children, style, ...options }) => {
+// options here are zoom (number like 3) and center (object like { lat: 0, lng: 0 })
+const Map = ({ onClick, onIdle, children, ...options }) => {
   const ref = useRef(null);
   const [map, setMap] = useState();
+  // console.log(map);
 
   useEffect(() => {
     if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, {}));
+      // Draw map the first time
+      setMap(new window.google.maps.Map(ref.current, {})); // ref.current => div where map will be shown, {} => options as an empty object which means no markers, no center set, no zoom, etc
     }
+    console.log("draw map");
   }, [ref, map]);
 
   // because React does not do deep comparisons, a custom hook is used
@@ -70,7 +74,7 @@ const Map = ({ onClick, onIdle, children, style, ...options }) => {
 
   return (
     <>
-      <div ref={ref} style={style} />
+      <div ref={ref} style={{ flexGrow: "1", height: "100vh" }} />
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
           // set the map prop on the child component
