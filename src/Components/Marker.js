@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const Marker = (options) => {
   const [marker, setMarker] = useState();
-
+  console.log(marker);
   useEffect(() => {
     if (!marker) {
       setMarker(new window.google.maps.Marker());
